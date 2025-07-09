@@ -7,7 +7,7 @@
     <base target="_top">
     <style>
         /* --- ESTILOS GERAIS E DO LOGIN --- */
-       /* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap'); */
+        /* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap'); */
         
         * {
             margin: 0;
@@ -146,6 +146,7 @@
             --cor-texto: #e0e0e0;
             --cor-destaque: #00aaff;
             --cor-destaque-hover: #0088cc;
+            --cor-perigo: #ff453a;
         }
 
         #app-content {
@@ -175,17 +176,17 @@
         }
 
         .logo a:hover { transform: scale(1.05); }
-        .nav-links { display: flex; gap: 2rem; }
+        .nav-links { display: flex; align-items: center; gap: 2rem; } /* Adicionado align-items */
         .nav-links a {
             color: var(--cor-texto);
             text-decoration: none;
             font-size: 1rem;
-            padding-bottom: 5px;
+            padding: 5px 0;
             position: relative;
             transition: color 0.3s ease;
         }
 
-        .nav-links a::after {
+        .nav-links a:not(#logout-button)::after {
             content: '';
             position: absolute;
             width: 0;
@@ -196,9 +197,25 @@
             transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
-        .nav-links a:hover { color: var(--cor-destaque); }
-        .nav-links a:hover::after { width: 100%; }
+        .nav-links a:not(#logout-button):hover { color: var(--cor-destaque); }
+        .nav-links a:not(#logout-button):hover::after { width: 100%; }
 
+        /* --- ESTILO NOVO PARA O BOTÃO SAIR --- */
+        #logout-button {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid var(--cor-perigo);
+            color: var(--cor-perigo);
+            background-color: transparent;
+            font-weight: 600;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        #logout-button:hover {
+            background-color: var(--cor-perigo);
+            color: white; /* Cor do texto ao passar o mouse */
+        }
+        
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -229,54 +246,19 @@
             overflow: hidden;
         }
 
-        .news-carousel h2 {
-            font-size: 2.2rem;
-            margin-bottom: 2rem;
-            color: white;
-        }
-
-        .carousel-slides {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-        }
-
-        .slide {
-            min-width: 100%;
-            box-sizing: border-box;
-            padding: 0 50px;
-        }
-
-        .slide h3 {
-            font-size: 1.5rem;
-            color: var(--cor-destaque);
-            margin-bottom: 0.5rem;
-        }
-
-        .carousel-button {
-            position: absolute;
-            top: 60%;
-            transform: translateY(-50%);
-            background-color: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: white;
-            padding: 0.5rem;
-            cursor: pointer;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.3s ease;
-        }
-
+        /* (Restante do seu CSS original permanece o mesmo) */
+        .news-carousel h2 { font-size: 2.2rem; margin-bottom: 2rem; color: white; }
+        .carousel-slides { display: flex; transition: transform 0.5s ease-in-out; }
+        .slide { min-width: 100%; box-sizing: border-box; padding: 0 50px; }
+        .slide h3 { font-size: 1.5rem; color: var(--cor-destaque); margin-bottom: 0.5rem; }
+        .carousel-button { position: absolute; top: 60%; transform: translateY(-50%); background-color: rgba(255, 255, 255, 0.1); border: none; color: white; padding: 0.5rem; cursor: pointer; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; transition: background-color 0.3s ease; }
         .carousel-button:hover { background-color: rgba(255, 255, 255, 0.2); }
         .carousel-button.prev { left: 15px; }
         .carousel-button.next { right: 15px; }
         .carousel-button svg { width: 24px; height: 24px; }
 
         @media (max-width: 768px) {
-            .nav-links { display: none; }
+            .nav-links { display: none; } /* O botão Sair também será ocultado aqui, o que é comum em mobile */
             .hero h1 { font-size: 2.5rem; }
         }
     </style>
@@ -304,19 +286,20 @@
     <div id="app-content">
         <header class="menu-bar">
             <div class="logo">
-                <a href="#">RECEPÇÃO SANTA CASA</a>
+                <a href="https://thiagopollow.github.io/SistemaRecepcao/">RECEPÇÃO SANTA CASA</a>
             </div>
             <nav class="nav-links">
                 <a href="https://script.google.com/macros/s/AKfycbximZzCDLArxrkySmWcYLkIrnz3uD1Rj0r4STNeD5s1iQrgIH-19y5yNDns3R2jNoYq/exec">Cofre Paciente</a>
                 <a href="https://script.google.com/macros/s/AKfycbwh7uVm0P8m3Ro5SFeCnWIqfMjyOGfSupt07B8oa49zvM9H41qSkcGyC6Jnug3Mo8gN/exec">AIH</a>
                 <a href="https://script.google.com/macros/s/AKfycbz-yEmZe75Yu9KPgg9NeNnH8Xgd0h1_2yeSK1yBF_m7gUCql1E7GG_enAVjrpfHaxEiKQ/exec">Passagem Plantão</a>
                 <a href="https://script.google.com/macros/s/AKfycbxOUQRiypnkRXjOhjGyCuLBAOOOktpomkeHJD9Yw04ih-AaJarxbNNBQD5Qj3XnbK4smA/exec">Receber Pertences</a>
-                <a href="https://script.google.com/macros/s/AKfycbzHvkq39pjKhGyXyJa-zEgeUge72ObG-ekRObx_Pfs0u2T7ujdyW8zvNrk6yEPM1VdR1Q/exec">Envio de E-mails</a>
+                <a href="https://script.google.com/macros/s/AKfycbx_QaEOWBeYOKztv7_8saQTtPOTSkU4slptEclDqRmGH8vqYdrkizokhUap-ocDX-xv4A/exec">Envio de E-mails</a>
+                <a href="#" id="logout-button">Sair</a>
             </nav>
         </header>
 
         <main id="home" class="main-content">
-            <section class="hero">
+             <section class="hero">
                 <h1>Bem-vindo ao Sistema STACASA</h1>
                 <p>Sua plataforma centralizada para acesso rápido aos sistemas essenciais.</p>
             </section>
@@ -410,6 +393,21 @@
                 document.getElementById('cracha').focus();
             }
         });
+        
+        // --- NOVA LÓGICA DE LOGOUT ---
+        const logoutButton = document.getElementById('logout-button');
+        if (logoutButton) {
+            logoutButton.addEventListener('click', function (event) {
+                event.preventDefault(); // Impede que o link '#' mude a URL
+
+                // Limpa os dados da sessão
+                sessionStorage.removeItem('isLoggedIn');
+                sessionStorage.removeItem('loggedInUser');
+
+                // Recarrega a página para voltar à tela de login
+                window.location.reload();
+            });
+        }
 
         // --- SCRIPT ORIGINAL DO SEU CARROSSEL ---
         const slidesContainer = document.querySelector('.carousel-slides');
