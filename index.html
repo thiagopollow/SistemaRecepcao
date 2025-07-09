@@ -36,6 +36,7 @@
             top: 0;
             left: 0;
             z-index: 2000;
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
         }
 
         .login-container {
@@ -285,14 +286,10 @@
     <section id="login-section">
         <div class="login-container">
             <form id="login-form">
-                <h2>Acesso ao Sistema</h2>
-                <div class="input-group">
-                    <label for="codigo">Código de Estabelecimento</label>
-                    <input type="password" id="codigo" name="codigo" required>
-                </div>
+                <h2>Controle de Acesso</h2>
                 <div class="input-group">
                     <label for="cracha">Número do Crachá</label>
-                    <input type="password" id="cracha" name="cracha" required>
+                    <input type="password" id="cracha" name="cracha" required autofocus>
                 </div>
                 <button type="submit">Entrar</button>
                 <p id="error-message"></p>
@@ -312,9 +309,9 @@
             <nav class="nav-links">
                 <a href="https://script.google.com/macros/s/AKfycbximZzCDLArxrkySmWcYLkIrnz3uD1Rj0r4STNeD5s1iQrgIH-19y5yNDns3R2jNoYq/exec">Cofre Paciente</a>
                 <a href="https://script.google.com/macros/s/AKfycbwh7uVm0P8m3Ro5SFeCnWIqfMjyOGfSupt07B8oa49zvM9H41qSkcGyC6Jnug3Mo8gN/exec">AIH</a>
-                <a href="https://script.google.com/macros/s/AKfycbxiBgW3ipBw1CNqvKtBmELfpPVgZRaVloS5iVWcc56-aIIHqQLyjaZs-lQMbFEZ7Z3Ygg/exec">Passagem Plantão</a>
+                <a href="https://script.google.com/macros/s/AKfycbz-yEmZe75Yu9KPgg9NeNnH8Xgd0h1_2yeSK1yBF_m7gUCql1E7GG_enAVjrpfHaxEiKQ/exec">Passagem Plantão</a>
                 <a href="https://script.google.com/macros/s/AKfycbxOUQRiypnkRXjOhjGyCuLBAOOOktpomkeHJD9Yw04ih-AaJarxbNNBQD5Qj3XnbK4smA/exec">Receber Pertences</a>
-                <a href="https://script.google.com/macros/s/AKfycbx_QaEOWBeYOKztv7_8saQTtPOTSkU4slptEclDqRmGH8vqYdrkizokhUap-ocDX-xv4A/exec">Envio de E-mails</a>
+                <a href="https://script.google.com/macros/s/AKfycbzHvkq39pjKhGyXyJa-zEgeUge72ObG-ekRObx_Pfs0u2T7ujdyW8zvNrk6yEPM1VdR1Q/exec">Envio de E-mails</a>
             </nav>
         </header>
 
@@ -354,39 +351,33 @@
     <script>
         // --- SCRIPT DE CONTROLE DE ACESSO E CONTEÚDO ---
 
-        // Seleciona os elementos principais que vamos manipular
         const loginSection = document.getElementById('login-section');
         const appContent = document.getElementById('app-content');
         const welcomeScreen = document.getElementById('welcome-screen');
         
-        // Função para mostrar o conteúdo principal e esconder o login
         function showAppContent(userName) {
-            // Personaliza a mensagem de boas-vindas na sua página principal
             const mainWelcomeTitle = document.querySelector('.hero h1');
-            mainWelcomeTitle.textContent = `Bem-vindo(a), ${userName}!`;
+            if (mainWelcomeTitle) {
+                mainWelcomeTitle.textContent = `Bem-vindo(a), ${userName}!`;
+            }
             
-            // Esconde a seção de login e mostra o conteúdo da aplicação
-            loginSection.style.display = 'none';
+            loginSection.style.opacity = '0';
+            loginSection.style.visibility = 'hidden';
             appContent.style.display = 'block';
         }
 
-        // VERIFICAÇÃO INICIAL: Executa assim que a página carrega
         (function checkAuth() {
             const isLoggedIn = sessionStorage.getItem('isLoggedIn');
             const userName = sessionStorage.getItem('loggedInUser');
 
             if (isLoggedIn === 'true' && userName) {
-                // Se o usuário já está logado na sessão, mostra a aplicação diretamente
                 showAppContent(userName);
             }
-            // Se não, não faz nada, a tela de login continuará visível por padrão
         })();
 
-        // LÓGICA DO FORMULÁRIO DE LOGIN
         document.getElementById('login-form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Previne o recarregamento da página
+            event.preventDefault();
 
-            const codigoEstabelecimento = document.getElementById('codigo').value;
             const cracha = document.getElementById('cracha').value;
             const errorMessage = document.getElementById('error-message');
 
@@ -397,33 +388,30 @@
                 '5617': 'THIAGO FAUSTINO', '6726': 'THIAGO MESQUITA'
             };
 
-            if (codigoEstabelecimento === '3021114' && MAPA_CRACHAS.hasOwnProperty(cracha)) {
+            if (MAPA_CRACHAS.hasOwnProperty(cracha)) {
                 errorMessage.textContent = '';
                 const nomeFuncionario = MAPA_CRACHAS[cracha];
 
-                // Salva o estado de login na sessão do navegador
                 sessionStorage.setItem('isLoggedIn', 'true');
                 sessionStorage.setItem('loggedInUser', nomeFuncionario);
 
-                // Mostra a tela de boas-vindas animada
                 const welcomeMessage = document.getElementById('welcome-message');
                 welcomeMessage.textContent = `Olá, ${nomeFuncionario}!`;
                 welcomeScreen.classList.add('show');
 
-                // Após a animação, esconde o login e a tela de boas-vindas, e mostra o app
                 setTimeout(() => {
                     welcomeScreen.classList.remove('show');
                     showAppContent(nomeFuncionario);
-                }, 2500); // 2.5 segundos
+                }, 2500);
 
             } else {
-                errorMessage.textContent = 'Credenciais inválidas. Tente novamente.';
-                document.getElementById('codigo').value = '';
+                errorMessage.textContent = 'Crachá inválido. Tente novamente.';
                 document.getElementById('cracha').value = '';
+                document.getElementById('cracha').focus();
             }
         });
 
-        // --- SCRIPT ORIGINAL DO SEU CARROSSEL (Não precisa mudar nada aqui) ---
+        // --- SCRIPT ORIGINAL DO SEU CARROSSEL ---
         const slidesContainer = document.querySelector('.carousel-slides');
         const slides = document.querySelectorAll('.slide');
         const prevButton = document.querySelector('.carousel-button.prev');
@@ -431,22 +419,24 @@
         let currentSlide = 0;
 
         function showSlide(index) {
-            if (slidesContainer) { // Adiciona verificação para garantir que o elemento existe
+            if (slidesContainer) {
                 slidesContainer.style.transform = `translateX(-${index * 100}%)`;
             }
         }
+        
+        if (nextButton && prevButton) {
+            nextButton.addEventListener('click', () => {
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            });
 
-        nextButton.addEventListener('click', () => {
-            currentSlide = (currentSlide + 1) % slides.length;
-            showSlide(currentSlide);
-        });
+            prevButton.addEventListener('click', () => {
+                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                showSlide(currentSlide);
+            });
+        }
 
-        prevButton.addEventListener('click', () => {
-            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-            showSlide(currentSlide);
-        });
-
-        showSlide(0); // Inicia o carrossel no primeiro slide
+        showSlide(0);
     </script>
 
 </body>
