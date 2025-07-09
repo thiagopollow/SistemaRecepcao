@@ -3,142 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Recepção STACASA</title>
-    <base target="_top">
     <style>
-        /* --- ESTILOS GERAIS E DO LOGIN --- */
-        /* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap'); */
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        /* Importa a fonte 'Poppins' do Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #121212; /* Cor de fundo principal da sua aplicação */
-            color: #e0e0e0;
-            line-height: 1.6;
-        }
-
-        /* --- SEÇÃO DE LOGIN --- */
-        #login-section {
-            background-color: #363636;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            width: 100%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 2000;
-            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
-        }
-
-        .login-container {
-            background-color: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            width: 320px;
-            text-align: center;
-        }
-
-        .login-container h2 {
-            color: #363636;
-            margin-bottom: 25px;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #555;
-            font-size: 14px;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            transition: border-color 0.3s;
-        }
-
-        .input-group input:focus {
-            outline: none;
-            border-color: #00BFFF;
-        }
-
-        button[type="submit"] {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 6px;
-            background-color: #00BFFF;
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-        }
-
-        button[type="submit"]:hover {
-            background-color: #009ACD;
-            transform: translateY(-2px);
-        }
-
-        #error-message {
-            color: #ff3b30;
-            margin-top: 15px;
-            height: 20px;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .welcome-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #00BFFF;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 3000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
-        }
-
-        .welcome-screen.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        #welcome-message {
-            color: white;
-            font-size: 2.5em;
-            text-align: center;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
-            animation: fadeInZoom 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-        }
-
-        @keyframes fadeInZoom {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        /* --- ESTILOS DA SUA APLICAÇÃO PRINCIPAL --- */
+        /* Variáveis de Cor para fácil customização */
         :root {
             --cor-fundo: #121212;
             --cor-primaria: #1e1e1e;
@@ -146,13 +15,21 @@
             --cor-texto: #e0e0e0;
             --cor-destaque: #00aaff;
             --cor-destaque-hover: #0088cc;
-            --cor-perigo: #ff453a;
         }
 
-        #app-content {
-            display: none; /* O conteúdo principal começa oculto */
+        /* --- ESTILOS GERAIS E DO CABEÇALHO (PARA REUTILIZAÇÃO) --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            line-height: 1.6;
+        }
         .menu-bar {
             background-color: rgba(30, 30, 30, 0.85);
             backdrop-filter: blur(10px);
@@ -166,7 +43,6 @@
             top: 0;
             z-index: 1000;
         }
-
         .logo a {
             font-size: 1.8rem;
             font-weight: 700;
@@ -174,19 +50,17 @@
             text-decoration: none;
             transition: transform 0.3s ease;
         }
-
         .logo a:hover { transform: scale(1.05); }
-        .nav-links { display: flex; align-items: center; gap: 2rem; } /* Adicionado align-items */
+        .nav-links { display: flex; gap: 2rem; }
         .nav-links a {
             color: var(--cor-texto);
             text-decoration: none;
             font-size: 1rem;
-            padding: 5px 0;
+            padding-bottom: 5px;
             position: relative;
             transition: color 0.3s ease;
         }
-
-        .nav-links a:not(#logout-button)::after {
+        .nav-links a::after {
             content: '';
             position: absolute;
             width: 0;
@@ -196,45 +70,27 @@
             left: 0;
             transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
+        .nav-links a:hover { color: var(--cor-destaque); }
+        .nav-links a:hover::after { width: 100%; }
 
-        .nav-links a:not(#logout-button):hover { color: var(--cor-destaque); }
-        .nav-links a:not(#logout-button):hover::after { width: 100%; }
-
-        /* --- ESTILO NOVO PARA O BOTÃO SAIR --- */
-        #logout-button {
-            padding: 8px 16px;
-            border-radius: 6px;
-            border: 1px solid var(--cor-perigo);
-            color: var(--cor-perigo);
-            background-color: transparent;
-            font-weight: 600;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        #logout-button:hover {
-            background-color: var(--cor-perigo);
-            color: white; /* Cor do texto ao passar o mouse */
-        }
-        
+        /* --- ESTILOS ESPECÍFICOS DA PÁGINA PRINCIPAL --- */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
         .main-content {
             padding-top: 100px;
             text-align: center;
             animation: fadeIn 1s ease-out;
         }
-
         .hero {
             padding: 6rem 2rem;
             background: linear-gradient(135deg, rgba(0, 170, 255, 0.05), rgba(30, 30, 30, 0.1));
         }
-
         .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; color: white; }
         .hero p { font-size: 1.2rem; max-width: 600px; margin: 0 auto; }
         
+        /* Estilos do Carrossel de Notícias */
         .news-carousel {
             padding: 4rem 2rem;
             margin: 4rem 10%;
@@ -243,173 +99,105 @@
             border: 1px solid var(--cor-borda);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             position: relative;
-            overflow: hidden;
+            overflow: hidden; /* Esconde os slides que não estão ativos */
         }
-
-        /* (Restante do seu CSS original permanece o mesmo) */
-        .news-carousel h2 { font-size: 2.2rem; margin-bottom: 2rem; color: white; }
-        .carousel-slides { display: flex; transition: transform 0.5s ease-in-out; }
-        .slide { min-width: 100%; box-sizing: border-box; padding: 0 50px; }
-        .slide h3 { font-size: 1.5rem; color: var(--cor-destaque); margin-bottom: 0.5rem; }
-        .carousel-button { position: absolute; top: 60%; transform: translateY(-50%); background-color: rgba(255, 255, 255, 0.1); border: none; color: white; padding: 0.5rem; cursor: pointer; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; transition: background-color 0.3s ease; }
+        .news-carousel h2 {
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            color: white;
+        }
+        .carousel-slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out; /* Animação de transição */
+        }
+        .slide {
+            min-width: 100%;
+            box-sizing: border-box;
+            padding: 0 50px; /* Espaço para os botões não sobreporem o texto */
+        }
+        .slide h3 {
+            font-size: 1.5rem;
+            color: var(--cor-destaque);
+            margin-bottom: 0.5rem;
+        }
+        .carousel-button {
+            position: absolute;
+            top: 60%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 0.5rem;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
         .carousel-button:hover { background-color: rgba(255, 255, 255, 0.2); }
         .carousel-button.prev { left: 15px; }
         .carousel-button.next { right: 15px; }
         .carousel-button svg { width: 24px; height: 24px; }
 
         @media (max-width: 768px) {
-            .nav-links { display: none; } /* O botão Sair também será ocultado aqui, o que é comum em mobile */
+            .nav-links { display: none; }
             .hero h1 { font-size: 2.5rem; }
         }
     </style>
 </head>
 <body>
 
-    <section id="login-section">
-        <div class="login-container">
-            <form id="login-form">
-                <h2>Controle de Acesso</h2>
-                <div class="input-group">
-                    <label for="cracha">Número do Crachá</label>
-                    <input type="password" id="cracha" name="cracha" required autofocus>
-                </div>
-                <button type="submit">Entrar</button>
-                <p id="error-message"></p>
-            </form>
+    <header class="menu-bar">
+        <div class="logo">
+            <a href="#" >RECEPÇÃO SANTA CASA</a>
         </div>
-    </section>
+        <nav class="nav-links">
+            <a href="https://script.google.com/macros/s/AKfycbyru1heS9wGt24E8szvgfxurgzSPg0m2EydaixKTkNqBbAJ5dsALTEWw3Y0_KN_zrPV/exec">Cofre Paciente</a>
+            <a href="https://script.google.com/macros/s/AKfycbwh7uVm0P8m3Ro5SFeCnWIqfMjyOGfSupt07B8oa49zvM9H41qSkcGyC6Jnug3Mo8gN/exec">AIH</a>
+            <a href="https://script.google.com/macros/s/AKfycbbykTex_oE3aL6SwlgkHQvZMQd-kG1Xg_A9Zy55eFGf-YlhHLTbH4K3HsNAQAx5pkG5_RQ/exec">Passagem Plantão</a>
+            <a href="https://script.google.com/macros/s/AKfycbwFLmOuu1U2IrJSsSOrn2D3L9xNVsDqDHU14mWrdisinFZVAfnSmVMLPvBSq3N1Yzvkqg/exec">Receber Pertences</a>
+            <a href="https://script.google.com/macros/s/AKfycbyA7LZkv8B9Wxvjo0CTXBB6rNnsU3-_DeSFBuRLc6a3jSKq27Zk1gS-KqVKlzb8Gh3ddg/exec">Envio de E-mails</a>
+        </nav>
+    </header>
 
-    <div id="welcome-screen" class="welcome-screen">
-        <h1 id="welcome-message"></h1>
-    </div>
+    <main id="home" class="main-content">
+        <section class="hero">
+            <h1>Bem-vindo ao Sistema STACASA</h1>
+            <p>Sua plataforma centralizada para acesso rápido aos sistemas essenciais.</p>
+        </section>
 
-    <div id="app-content">
-        <header class="menu-bar">
-            <div class="logo">
-                <a href="https://thiagopollow.github.io/SistemaRecepcao/">RECEPÇÃO SANTA CASA</a>
-            </div>
-            <nav class="nav-links">
-                <a href="https://script.google.com/macros/s/AKfycbximZzCDLArxrkySmWcYLkIrnz3uD1Rj0r4STNeD5s1iQrgIH-19y5yNDns3R2jNoYq/exec">Cofre Paciente</a>
-                <a href="https://script.google.com/macros/s/AKfycbwh7uVm0P8m3Ro5SFeCnWIqfMjyOGfSupt07B8oa49zvM9H41qSkcGyC6Jnug3Mo8gN/exec">AIH</a>
-                <a href="https://script.google.com/macros/s/AKfycbz-yEmZe75Yu9KPgg9NeNnH8Xgd0h1_2yeSK1yBF_m7gUCql1E7GG_enAVjrpfHaxEiKQ/exec">Passagem Plantão</a>
-                <a href="https://script.google.com/macros/s/AKfycbxOUQRiypnkRXjOhjGyCuLBAOOOktpomkeHJD9Yw04ih-AaJarxbNNBQD5Qj3XnbK4smA/exec">Receber Pertences</a>
-                <a href="https://script.google.com/macros/s/AKfycbx_QaEOWBeYOKztv7_8saQTtPOTSkU4slptEclDqRmGH8vqYdrkizokhUap-ocDX-xv4A/exec">Envio de E-mails</a>
-                <a href="#" id="logout-button">Sair</a>
-            </nav>
-        </header>
-
-        <main id="home" class="main-content">
-             <section class="hero">
-                <h1>Bem-vindo ao Sistema STACASA</h1>
-                <p>Sua plataforma centralizada para acesso rápido aos sistemas essenciais.</p>
-            </section>
-            <section class="news-carousel">
-                <h2>Últimas Notícias do Serviço</h2>
-                <div class="carousel-container">
-                    <div class="carousel-slides">
-                        <div class="slide">
-                            <h3>Novo Protocolo de Atendimento</h3>
-                            <p>A partir de hoje, um novo protocolo para o atendimento de emergência foi implementado. Por favor, consultem a documentação enviada por e-mail.</p>
-                        </div>
-                        <div class="slide">
-                            <h3>Atualização do Sistema de Plantão</h3>
-                            <p>O sistema de Passagem de Plantão (PP6) recebeu uma atualização importante para melhorar o registro de informações. Agradecemos o feedback de todos.</p>
-                        </div>
-                        <div class="slide">
-                            <h3>Treinamento de Segurança</h3>
-                            <p>Lembrete: O treinamento obrigatório de segurança de dados será realizado na próxima sexta-feira, no auditório principal. A presença de todos é fundamental.</p>
-                        </div>
+        <section class="news-carousel">
+            <h2>Últimas Notícias do Serviço</h2>
+            <div class="carousel-container">
+                <div class="carousel-slides">
+                    <div class="slide">
+                        <h3>Novo Protocolo de Atendimento</h3>
+                        <p>A partir de hoje, um novo protocolo para o atendimento de emergência foi implementado. Por favor, consultem a documentação enviada por e-mail.</p>
+                    </div>
+                    <div class="slide">
+                        <h3>Atualização do Sistema de Plantão</h3>
+                        <p>O sistema de Passagem de Plantão (PP6) recebeu uma atualização importante para melhorar o registro de informações. Agradecemos o feedback de todos.</p>
+                    </div>
+                    <div class="slide">
+                        <h3>Treinamento de Segurança</h3>
+                        <p>Lembrete: O treinamento obrigatório de segurança de dados será realizado na próxima sexta-feira, no auditório principal. A presença de todos é fundamental.</p>
                     </div>
                 </div>
-                <button class="carousel-button prev">
-                    <svg viewBox="0 0 24 24"><path fill="currentColor" d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z"/></svg>
-                </button>
-                <button class="carousel-button next">
-                    <svg viewBox="0 0 24 24"><path fill="currentColor" d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"/></svg>
-                </button>
-            </section>
-        </main>
-    </div>
+            </div>
+            <button class="carousel-button prev">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z"/></svg>
+            </button>
+            <button class="carousel-button next">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"/></svg>
+            </button>
+        </section>
+    </main>
 
     <script>
-        // --- SCRIPT DE CONTROLE DE ACESSO E CONTEÚDO ---
-
-        const loginSection = document.getElementById('login-section');
-        const appContent = document.getElementById('app-content');
-        const welcomeScreen = document.getElementById('welcome-screen');
-        
-        function showAppContent(userName) {
-            const mainWelcomeTitle = document.querySelector('.hero h1');
-            if (mainWelcomeTitle) {
-                mainWelcomeTitle.textContent = `Bem-vindo(a), ${userName}!`;
-            }
-            
-            loginSection.style.opacity = '0';
-            loginSection.style.visibility = 'hidden';
-            appContent.style.display = 'block';
-        }
-
-        (function checkAuth() {
-            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
-            const userName = sessionStorage.getItem('loggedInUser');
-
-            if (isLoggedIn === 'true' && userName) {
-                showAppContent(userName);
-            }
-        })();
-
-        document.getElementById('login-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            const cracha = document.getElementById('cracha').value;
-            const errorMessage = document.getElementById('error-message');
-
-            const MAPA_CRACHAS = {
-                '3468': 'ANGELICA ARAGÃO', '9975': 'DAVI RIPARDO', '6883': 'DHONLENO SOUSA',
-                '10020': 'GILCIANE LIBERATO', '8119': 'NETO ARRUDA', '7530': 'KELSON KLISMAN',
-                '4201': 'GLÓRIA MAIA', '8071': 'THALYSSON ALBUQUERQUE', '7679': 'PAULO VICTOR',
-                '5617': 'THIAGO FAUSTINO', '6726': 'THIAGO MESQUITA'
-            };
-
-            if (MAPA_CRACHAS.hasOwnProperty(cracha)) {
-                errorMessage.textContent = '';
-                const nomeFuncionario = MAPA_CRACHAS[cracha];
-
-                sessionStorage.setItem('isLoggedIn', 'true');
-                sessionStorage.setItem('loggedInUser', nomeFuncionario);
-
-                const welcomeMessage = document.getElementById('welcome-message');
-                welcomeMessage.textContent = `Olá, ${nomeFuncionario}!`;
-                welcomeScreen.classList.add('show');
-
-                setTimeout(() => {
-                    welcomeScreen.classList.remove('show');
-                    showAppContent(nomeFuncionario);
-                }, 2500);
-
-            } else {
-                errorMessage.textContent = 'Crachá inválido. Tente novamente.';
-                document.getElementById('cracha').value = '';
-                document.getElementById('cracha').focus();
-            }
-        });
-        
-        // --- NOVA LÓGICA DE LOGOUT ---
-        const logoutButton = document.getElementById('logout-button');
-        if (logoutButton) {
-            logoutButton.addEventListener('click', function (event) {
-                event.preventDefault(); // Impede que o link '#' mude a URL
-
-                // Limpa os dados da sessão
-                sessionStorage.removeItem('isLoggedIn');
-                sessionStorage.removeItem('loggedInUser');
-
-                // Recarrega a página para voltar à tela de login
-                window.location.reload();
-            });
-        }
-
-        // --- SCRIPT ORIGINAL DO SEU CARROSSEL ---
+        // Script para o Carrossel
         const slidesContainer = document.querySelector('.carousel-slides');
         const slides = document.querySelectorAll('.slide');
         const prevButton = document.querySelector('.carousel-button.prev');
@@ -417,23 +205,20 @@
         let currentSlide = 0;
 
         function showSlide(index) {
-            if (slidesContainer) {
-                slidesContainer.style.transform = `translateX(-${index * 100}%)`;
-            }
-        }
-        
-        if (nextButton && prevButton) {
-            nextButton.addEventListener('click', () => {
-                currentSlide = (currentSlide + 1) % slides.length;
-                showSlide(currentSlide);
-            });
-
-            prevButton.addEventListener('click', () => {
-                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-                showSlide(currentSlide);
-            });
+            slidesContainer.style.transform = `translateX(-${index * 100}%)`;
         }
 
+        nextButton.addEventListener('click', () => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        });
+
+        prevButton.addEventListener('click', () => {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(currentSlide);
+        });
+
+        // Inicia no primeiro slide
         showSlide(0);
     </script>
 
