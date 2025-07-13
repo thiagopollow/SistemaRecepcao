@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
-        /* Importa a fonte 'Poppins' do Google Fonts */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-
-        /* Variáveis de Cor para fácil customização */
         :root {
             --cor-fundo: #121212;
             --cor-primaria: #1e1e1e;
@@ -15,15 +13,11 @@
             --cor-texto: #e0e0e0;
             --cor-destaque: #00aaff;
             --cor-destaque-hover: #0088cc;
+            --cor-fundo-cartao: #1a1a1a;
         }
 
         /* --- ESTILOS GERAIS E DO CABEÇALHO (PARA REUTILIZAÇÃO) --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        html { scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--cor-fundo);
@@ -48,180 +42,169 @@
             font-weight: 700;
             color: var(--cor-destaque);
             text-decoration: none;
-            transition: transform 0.3s ease;
         }
-        .logo a:hover { transform: scale(1.05); }
-        .nav-links { display: flex; gap: 2rem; }
+        .nav-links { display: flex; align-items: center; gap: 1.5rem; }
         .nav-links a {
             color: var(--cor-texto);
             text-decoration: none;
-            font-size: 1rem;
-            padding-bottom: 5px;
-            position: relative;
+            font-size: 0.95rem;
+            padding: 5px 0;
             transition: color 0.3s ease;
         }
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            background: var(--cor-destaque);
-            bottom: 0;
-            left: 0;
-            transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
         .nav-links a:hover { color: var(--cor-destaque); }
-        .nav-links a:hover::after { width: 100%; }
-
-        /* --- ESTILOS ESPECÍFICOS DA PÁGINA PRINCIPAL --- */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .main-content {
-            padding-top: 100px;
-            text-align: center;
-            animation: fadeIn 1s ease-out;
-        }
-        .hero {
-            padding: 6rem 2rem;
-            background: linear-gradient(135deg, rgba(0, 170, 255, 0.05), rgba(30, 30, 30, 0.1));
-        }
-        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; color: white; }
-        .hero p { font-size: 1.2rem; max-width: 600px; margin: 0 auto; }
         
-        /* Estilos do Carrossel de Notícias */
-        .news-carousel {
-            padding: 4rem 2rem;
-            margin: 4rem 10%;
-            border-radius: 15px;
-            background-color: var(--cor-primaria);
-            border: 1px solid var(--cor-borda);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            position: relative;
-            overflow: hidden; /* Esconde os slides que não estão ativos */
-        }
-        .news-carousel h2 {
-            font-size: 2.2rem;
-            margin-bottom: 2rem;
-            color: white;
-        }
-        .carousel-slides {
-            display: flex;
-            transition: transform 0.5s ease-in-out; /* Animação de transição */
-        }
-        .slide {
-            min-width: 100%;
-            box-sizing: border-box;
-            padding: 0 50px; /* Espaço para os botões não sobreporem o texto */
-        }
-        .slide h3 {
-            font-size: 1.5rem;
-            color: var(--cor-destaque);
-            margin-bottom: 0.5rem;
-        }
-        .carousel-button {
-            position: absolute;
-            top: 60%;
-            transform: translateY(-50%);
-            background-color: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: white;
-            padding: 0.5rem;
+        /* Estilo do Dropdown "Outros" */
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown .dropbtn {
             cursor: pointer;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            transition: background-color 0.3s ease;
+            gap: 5px;
         }
-        .carousel-button:hover { background-color: rgba(255, 255, 255, 0.2); }
-        .carousel-button.prev { left: 15px; }
-        .carousel-button.next { right: 15px; }
-        .carousel-button svg { width: 24px; height: 24px; }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--cor-primaria);
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border: 1px solid var(--cor-borda);
+            border-radius: 8px;
+            margin-top: 10px;
+            right: 0; /* Alinha o dropdown à direita */
+        }
+        .dropdown-content a {
+            color: var(--cor-texto);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 0.9rem;
+        }
+        .dropdown-content a:hover { background-color: var(--cor-destaque-hover); color: white; }
+        .show { display: block; } /* Classe adicionada via JS para mostrar o dropdown */
 
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .hero h1 { font-size: 2.5rem; }
+        /* --- ESTILOS ESPECÍFICOS DA PÁGINA PRINCIPAL (GRID) --- */
+        .main-content {
+            padding: 120px 5% 40px; /* Mais espaço no topo */
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .grid-item {
+            background-color: var(--cor-fundo-cartao);
+            border: 1px solid var(--cor-borda);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: left;
+            text-decoration: none;
+            color: var(--cor-texto);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .grid-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0, 170, 255, 0.1);
+            border-color: var(--cor-destaque);
+        }
+        .grid-item .icon {
+            font-size: 2.5rem;
+            color: var(--cor-destaque);
+            margin-bottom: 1rem;
+        }
+        .grid-item h3 {
+            font-size: 1.3rem;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+        .grid-item p {
+            font-size: 0.9rem;
+            line-height: 1.5;
         }
     </style>
-    <base target="_top">
 </head>
 <body>
 
     <header class="menu-bar">
         <div class="logo">
-            <a href="https://thiagopollow.github.io/SistemaRecepcao/" >RECEPÇÃO SANTA CASA</a>
+            <a href="#">RECEPÇÃO SANTA CASA</a>
         </div>
         <nav class="nav-links">
-            <a href="https://script.google.com/macros/s/AKfycbxil88ZS-GtNHpIfMTpJ4CixVQmneT3SAXNfknATc0qVEJ_MflnlpCIygTepF1DkpbL/exec" target="_top">Cofre Paciente</a>
-            <a href="https://script.google.com/macros/s/AKfycbwh7uVm0P8m3Ro5SFeCnWIqfMjyOGfSupt07B8oa49zvM9H41qSkcGyC6Jnug3Mo8gN/exec"target="_top">AIH</a>
-            <a href="https://script.google.com/macros/s/AKfycbyrYX_SBFx2RsKsFq1JQjkvCA1-0vgz0_vacHkGHwI1X4PpRRaaD8-PgpmqYoHyyfPgYw/exec"target="_top">Passagem Plantão</a>
-            <a href="https://script.google.com/macros/s/AKfycbxOUQRiypnkRXjOhjGyCuLBAOOOktpomkeHJD9Yw04ih-AaJarxbNNBQD5Qj3XnbK4smA/exec"target="_top">Receber Pertences</a>
-            <a href="https://script.google.com/macros/s/AKfycbzHvkq39pjKhGyXyJa-zEgeUge72ObG-ekRObx_Pfs0u2T7ujdyW8zvNrk6yEPM1VdR1Q/exec" target="_top">Envio de E-mails</a>
-            <a href="https://script.google.com/macros/s/AKfycbz1EC7_G3_M4z2POiSnzmHF_uVUeaeBaEGdSxYQNTdlgcN3tQQ44mYrOVOnJlUWSz3EIQ/exec"target="_top">Conferência Cadastro</a>
+            <a href="URL_LINK_COFRE_PACIENTE">Cofre Paciente</a>
+            <a href="URL_LINK_AIH">AIH</a>
+            <a href="URL_LINK_PASSAGEM_PLANTAO">Passagem Plantão</a>
+            
+            <div class="dropdown">
+                <a href="#" class="dropbtn" onclick="toggleDropdown(event)">
+                    Outros <i class="fas fa-chevron-down" style="font-size: 0.8em;"></i>
+                </a>
+                <div id="myDropdown" class="dropdown-content">
+                    <a href="URL_LINK_RECEBER_PERTENCES">Receber Pertences</a>
+                    <a href="URL_LINK_ENVIO_EMAILS">Envio de E-mails</a>
+                    <a href="URL_LINK_CONFERENCIA_CADASTRO">Conferência Cadastro</a>
+                    <a href="#">(Página Futura 1)</a>
+                    <a href="#">(Página Futura 2)</a>
+                </div>
+            </div>
         </nav>
     </header>
 
-    <main id="home" class="main-content">
-        <section class="hero">
-            <h1>Bem-vindo ao Sistema STACASA</h1>
-            <p>Sua plataforma centralizada para acesso rápido aos sistemas essenciais.</p>
-        </section>
-
-        <section class="news-carousel">
-            <h2>Últimas Notícias do Serviço</h2>
-            <div class="carousel-container">
-                <div class="carousel-slides">
-                    <div class="slide">
-                        <h3>Novo Protocolo de Atendimento</h3>
-                        <p>A partir de hoje, um novo protocolo para o atendimento de emergência foi implementado. Por favor, consultem a documentação enviada por e-mail.</p>
-                    </div>
-                    <div class="slide">
-                        <h3>Atualização do Sistema de Plantão</h3>
-                        <p>O sistema de Passagem de Plantão (PP6) recebeu uma atualização importante para melhorar o registro de informações. Agradecemos o feedback de todos.</p>
-                    </div>
-                    <div class="slide">
-                        <h3>Treinamento de Segurança</h3>
-                        <p>Lembrete: O treinamento obrigatório de segurança de dados será realizado na próxima sexta-feira, no auditório principal. A presença de todos é fundamental.</p>
-                    </div>
-                </div>
-            </div>
-            <button class="carousel-button prev">
-                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z"/></svg>
-            </button>
-            <button class="carousel-button next">
-                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"/></svg>
-            </button>
-        </section>
+    <main class="main-content">
+        <div class="grid-container">
+            <a href="URL_LINK_COFRE_PACIENTE" class="grid-item">
+                <div class="icon"><i class="fas fa-safe"></i></div>
+                <h3>Cofre Paciente</h3>
+                <p>Gestão do cofre e pertences de pacientes.</p>
+            </a>
+            <a href="URL_LINK_AIH" class="grid-item">
+                <div class="icon"><i class="fas fa-bed-pulse"></i></div>
+                <h3>AIH</h3>
+                <p>Sistema de Autorização de Internação Hospitalar.</p>
+            </a>
+            <a href="URL_LINK_PASSAGEM_PLANTAO" class="grid-item">
+                <div class="icon"><i class="fas fa-clipboard-list"></i></div>
+                <h3>Passagem Plantão</h3>
+                <p>Registro e consulta de passagens de plantão.</p>
+            </a>
+            <a href="URL_LINK_RECEBER_PERTENCES" class="grid-item">
+                <div class="icon"><i class="fas fa-box-open"></i></div>
+                <h3>Receber Pertences</h3>
+                <p>Sistema para receber pertences de acompanhantes.</p>
+            </a>
+            <a href="URL_LINK_ENVIO_EMAILS" class="grid-item">
+                <div class="icon"><i class="fas fa-envelope-open-text"></i></div>
+                <h3>Envio de E-mails</h3>
+                <p>Disparo de e-mails para setores específicos.</p>
+            </a>
+            <a href="URL_LINK_CONFERENCIA_CADASTRO" class="grid-item">
+                <div class="icon"><i class="fas fa-user-check"></i></div>
+                <h3>Conferência Cadastro</h3>
+                <p>Ferramenta para conferência de cadastros.</p>
+            </a>
+        </div>
     </main>
 
     <script>
-        // Script para o Carrossel
-        const slidesContainer = document.querySelector('.carousel-slides');
-        const slides = document.querySelectorAll('.slide');
-        const prevButton = document.querySelector('.carousel-button.prev');
-        const nextButton = document.querySelector('.carousel-button.next');
-        let currentSlide = 0;
-
-        function showSlide(index) {
-            slidesContainer.style.transform = `translateX(-${index * 100}%)`;
+        // Script para o Dropdown
+        function toggleDropdown(event) {
+            event.preventDefault(); // Impede que o link '#' navegue
+            document.getElementById("myDropdown").classList.toggle("show");
         }
 
-        nextButton.addEventListener('click', () => {
-            currentSlide = (currentSlide + 1) % slides.length;
-            showSlide(currentSlide);
-        });
-
-        prevButton.addEventListener('click', () => {
-            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-            showSlide(currentSlide);
-        });
-
-        // Inicia no primeiro slide
-        showSlide(0);
+        // Fecha o dropdown se o usuário clicar fora dele
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn') && !event.target.matches('.dropbtn *')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
     </script>
 
 </body>
