@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Pacientes - Contingência</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sistema de Contingência - Cadastro de Pacientes</h1>
+            <p>Use este formulário quando o sistema principal estiver indisponível. Os dados são salvos localmente no seu navegador.</p>
+        </header>
+
+        <form id="patient-form">
+            <input type="hidden" id="dataHora">
+
+            <fieldset>
+                <legend>Dados Pessoais</legend>
+                <div class="form-grid">
+                    <div><label for="matricula">Matrícula:</label><input type="number" id="matricula" name="matricula"></div>
+                    <div><label for="dataNascimento">Data de Nascimento:*</label><input type="date" id="dataNascimento" name="dataNascimento" required></div>
+                    <div>
+                        <label>Sexo:*</label>
+                        <div class="radio-group">
+                            <input type="radio" id="sexoMasc" name="sexo" value="Masculino" required><label for="sexoMasc">Masc.</label>
+                            <input type="radio" id="sexoFem" name="sexo" value="Feminino"><label for="sexoFem">Fem.</label>
+                        </div>
+                    </div>
+                    <div><label for="nomeMae">Nome da Mãe:*</label><input type="text" id="nomeMae" name="nomeMae" required></div>
+                    <div><label for="nomePai">Nome do Pai:</label><input type="text" id="nomePai" name="nomePai"></div>
+                    <div>
+                        <label for="estadoCivil">Estado Civil:*</label>
+                        <select id="estadoCivil" name="estadoCivil" required>
+                            <option value="">Selecione...</option>
+                            <option value="Solteiro(a)">Solteiro(a)</option>
+                            <option value="Casado(a)">Casado(a)</option>
+                            <option value="União Estável">União Estável</option>
+                            <option value="Viúvo(a)">Viúvo(a)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="cor">Cor/Raça:*</label>
+                        <select id="cor" name="cor" required>
+                            <option value="">Selecione...</option>
+                            <option value="Amarela">Amarela</option>
+                            <option value="Branca">Branca</option>
+                            <option value="Indígena">Indígena</option>
+                            <option value="Parda">Parda</option>
+                            <option value="Preta">Preta</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Documentos</legend>
+                <div class="form-grid">
+                    <div><label for="identidade">Identidade:</label><input type="text" id="identidade" name="identidade"></div>
+                    <div><label for="orgaoEmissor">Órgão Emissor:</label><input type="text" id="orgaoEmissor" name="orgaoEmissor"></div>
+                    <div><label for="dataExpedicaoDoc">Data de Expedição:</label><input type="date" id="dataExpedicaoDoc" name="dataExpedicaoDoc"></div>
+                    <div><label for="cpf">CPF:</label><input type="text" id="cpf" name="cpf" placeholder="000.000.000-00"></div>
+                    <div><label for="cns">CNS:</label><input type="number" id="cns" name="cns"></div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Certidão</legend>
+                <div class="form-grid">
+                    <div>
+                        <label for="tipoCertidao">Tipo:</label>
+                        <select id="tipoCertidao" name="tipoCertidao">
+                            <option value="">Selecione...</option>
+                            <option value="Nascimento">Nascimento</option>
+                            <option value="Casamento">Casamento</option>
+                            <option value="Óbito">Óbito</option>
+                        </select>
+                    </div>
+                    <div><label for="certidaoNumero">Número:</label><input type="text" id="certidaoNumero" name="certidaoNumero"></div>
+                    <div><label for="livro">Livro:</label><input type="text" id="livro" name="livro"></div>
+                    <div><label for="folha">Folha:</label><input type="text" id="folha" name="folha"></div>
+                    <div><label for="cartorio">Cartório:</label><input type="text" id="cartorio" name="cartorio"></div>
+                    <div><label for="dataExpedicaoCert">Data de Expedição:</label><input type="date" id="dataExpedicaoCert" name="dataExpedicaoCert"></div>
+                    <div><label for="naturalidade">Naturalidade:</label><input type="text" id="naturalidade" name="naturalidade"></div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Residência</legend>
+                <div class="form-grid">
+                    <div class="full-width"><label for="endereco">Endereço:*</label><input type="text" id="endereco" name="endereco" required></div>
+                    <div><label for="numeroCasa">Número:</label><input type="text" id="numeroCasa" name="numeroCasa"></div>
+                    <div><label for="bairro">Bairro:*</label><input type="text" id="bairro" name="bairro" required></div>
+                    <div><label for="cidade">Cidade:*</label><input type="text" id="cidade" name="cidade" required></div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Complementos</legend>
+                <div class="form-grid">
+                    <div><label for="telefone">Telefone:*</label><input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" required></div>
+                    <div><label for="profissao">Profissão:</label><input type="text" id="profissao" name="profissao"></div>
+                    <div><label for="religiao">Religião:</label><input type="text" id="religiao" name="religiao"></div>
+                    <div><label for="grauInstrucao">Grau de Instrução:</label><input type="text" id="grauInstrucao" name="grauInstrucao"></div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Atendimento</legend>
+                <div class="form-grid">
+                    <div><label for="medico">Médico(a) Responsável:*</label><input type="text" id="medico" name="medico" required></div>
+                    <div><label for="procedencia">Local de Procedência:*</label><input type="text" id="procedencia" name="procedencia" required></div>
+                    <div><label for="recepcionista">Recepcionista:*</label><input type="text" id="recepcionista" name="recepcionista" required></div>
+                    <div class="full-width"><label for="observacao">Observação:</label><textarea id="observacao" name="observacao" rows="3"></textarea></div>
+                </div>
+            </fieldset>
+
+            <div class="actions">
+                <button type="submit" class="btn-salvar">Salvar e Imprimir</button>
+                <button type="reset" class="btn-limpar">Limpar Formulário</button>
+            </div>
+        </form>
+
+        <section class="saved-patients">
+            <h2>Pacientes Salvos Localmente</h2>
+            <div id="patient-list">
+                <p>Nenhum paciente salvo ainda.</p>
+            </div>
+        </section>
+
+    </div>
+
+    <div id="print-area"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
