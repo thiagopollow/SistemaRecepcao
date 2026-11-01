@@ -142,6 +142,22 @@
       background-color: #0B751C;
     }
 
+     /* ---- TEMA BOTÃO 5: PERTENCES PACIENTE (Azul) ---- */
+    .btn-card[data-theme="email"] .icon-box {
+      background-color: #DAA520;
+      color: #ffffff;
+    }
+    .btn-card[data-theme="email"] .btn-text span:first-child {
+      color:#DAA520;
+      font-style: italic;
+    }
+    .btn-card[data-theme="email"] .btn-text span:last-child {
+      color: #000000;
+    }
+    .btn-card[data-theme="email"] .indicator-bar {
+      background-color: #DAA520;
+    }
+
     /* Estado Ativo (Página Selecionada) */
     .btn-card.active {
       border-color: #b0b0b0;
@@ -213,6 +229,18 @@
       <div class="btn-text">
         <span>PROTOCOLO</span>
         <span>DE AIH</span>
+      </div>
+      <div class="indicator-bar"></div>
+    </div>
+
+    <!-- Botão 5 -->
+    <div class="btn-card" data-theme="email" onclick="carregarPagina(this, 'https://script.google.com/macros/s/AKfycbxFF6zvL8lGEoTTCe6zzQNs29lgyc0_l_3VmHVO5U1rvkDQ6vP0IFS39H9r5Xb6VNGSgw/exec')">
+      <div class="icon-box">
+       <i class="fa-solid fa-envelope-open-text"></i>
+      </div>
+      <div class="btn-text">
+        <span>ENVIAR</span>
+        <span>E-MAIL</span>
       </div>
       <div class="indicator-bar"></div>
     </div>
