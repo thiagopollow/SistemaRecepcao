@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <base target="_top">
+  <!-- Ícones do FontAwesome para representação gráfica simples -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f4f6f9;
+      padding: 15px;
+    }
+
+    /* Container do Menu */
+    .menu-container {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+
+    /* Estilo Base do Botão Box */
+    .btn-card {
+      position: relative;
+      background: #ffffff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 12px 20px 22px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      min-width: 220px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      transition: all 0.25s ease;
+      user-select: none;
+    }
+
+    .btn-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Círculo do Ícone */
+    .icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    /* Texto do Botão */
+    .btn-text {
+      display: flex;
+      flex-direction: column;
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 13px;
+      line-height: 1.2;
+    }
+
+    /* Faixa Colorida na Borda Inferior */
+    .indicator-bar {
+      position: absolute;
+      bottom: -6px;
+      left: 10px;
+      right: 10px;
+      height: 12px;
+      border-radius: 20px;
+      opacity: 0;
+      transform: scaleX(0.7);
+      transition: all 0.25s ease;
+    }
+
+    /* ---- TEMA BOTÃO 1: PASSAGEM DE PLANTÃO (Laranja/Coral) ---- */
+    .btn-card[data-theme="plantao"] .icon-box {
+      background-color: #fff3e0;
+      color: #e65100;
+    }
+    .btn-card[data-theme="plantao"] .btn-text {
+      color: #2c3e50;
+    }
+    .btn-card[data-theme="plantao"] .indicator-bar {
+      background-color: #e06d53;
+    }
+
+    /* ---- TEMA BOTÃO 2: COFRE DO PACIENTE (Vermelho) ---- */
+    .btn-card[data-theme="cofre"] .icon-box {
+      background-color: #ffebee;
+      color: #d32f2f;
+    }
+    .btn-card[data-theme="cofre"] .btn-text span:first-child {
+      color: #d32f2f;
+      font-style: italic;
+    }
+    .btn-card[data-theme="cofre"] .btn-text span:last-child {
+      color: #000000;
+    }
+    .btn-card[data-theme="cofre"] .indicator-bar {
+      background-color: #ff0000;
+    }
+
+    /* ---- TEMA BOTÃO 3: PERTENCES PACIENTE (Azul) ---- */
+    .btn-card[data-theme="pertences"] .icon-box {
+      background-color: #0052cc;
+      color: #ffffff;
+    }
+    .btn-card[data-theme="pertences"] .btn-text span:first-child {
+      color: #0052cc;
+      font-style: italic;
+    }
+    .btn-card[data-theme="pertences"] .btn-text span:last-child {
+      color: #000000;
+    }
+    .btn-card[data-theme="pertences"] .indicator-bar {
+      background-color: #0052cc;
+    }
+
+    /* Estado Ativo (Página Selecionada) */
+    .btn-card.active {
+      border-color: #b0b0b0;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+    }
+
+    .btn-card.active .indicator-bar {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+
+    /* Estilo do Iframe */
+    iframe {
+      width: 100%;
+      height: 75vh;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #ffffff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MENU COM OS BOTÕES ESTILIZADOS -->
+  <div class="menu-container">
+
+    <!-- Botão 1 -->
+    <div class="btn-card active" data-theme="plantao" onclick="carregarPagina(this, 'https://script.google.com/macros/s/AKfycbzEQLK9pD_3D0jYbg1_qejfGiD3O3i6gSzhvAydNEbY1yg4LlBe4z1QMsiPBp-MsW3TOQ/exec')">
+      <div class="icon-box">
+        <i class="fa-solid fa-clipboard-list"></i>
+      </div>
+      <div class="btn-text">
+        <span>PASSAGEM DE</span>
+        <span>PLANTÃO</span>
+      </div>
+      <div class="indicator-bar"></div>
+    </div>
+
+    <!-- Botão 2 -->
+    <div class="btn-card" data-theme="cofre" onclick="carregarPagina(this, 'https://script.google.com/macros/s/AKfycbz7rqUBGmrLs0iFKfnTbv6ZpGjRWekUZxlWN0DExibbf1rFmXNPVnX927LKMCYOKSGi/exec')">
+      <div class="icon-box">
+        <i class="fa-solid fa-lock"></i>
+      </div>
+      <div class="btn-text">
+        <span>COFRE DO</span>
+        <span>PACIENTE</span>
+      </div>
+      <div class="indicator-bar"></div>
+    </div>
+
+    <!-- Botão 3 -->
+    <div class="btn-card" data-theme="pertences" onclick="carregarPagina(this, 'https://script.google.com/macros/s/AKfycbx_GOxwRUCnjwppYNh-z_gZkJDdhGcV7BzfjGBVxHiWIhPqjKr3s1GVdfDfFbAZ0EFraQ/exec')">
+      <div class="icon-box">
+        <i class="fa-solid fa-user-nurse"></i>
+      </div>
+      <div class="btn-text">
+        <span>PERTENCES</span>
+        <span>PACIENTE</span>
+      </div>
+      <div class="indicator-bar"></div>
+    </div>
+
+  </div>
+
+  <!-- A JANELA IFRAME -->
+  <iframe id="conteudoJanela" src="URL_DO_SEU_APPS_SCRIPT_1"></iframe>
+
+  <script>
+    function carregarPagina(elemento, url) {
+      // 1. Remove a classe 'active' de todos os botões
+      const botoes = document.querySelectorAll('.btn-card');
+      botoes.forEach(btn => btn.classList.remove('active'));
+
+      // 2. Adiciona a classe 'active' apenas no botão clicado
+      elemento.classList.add('active');
+
+      // 3. Atualiza o link do iframe
+      document.getElementById('conteudoJanela').src = url;
+    }
+  </script>
+</body>
+</html>
