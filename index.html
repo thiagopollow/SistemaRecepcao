@@ -126,6 +126,21 @@
     .btn-card[data-theme="pertences"] .indicator-bar {
       background-color: #0052cc;
     }
+     /* ---- TEMA BOTÃO 4: PERTENCES PACIENTE (Azul) ---- */
+    .btn-card[data-theme="AIH"] .icon-box {
+      background-color: #0052cc;
+      color: #ffffff;
+    }
+    .btn-card[data-theme="AIH"] .btn-text span:first-child {
+      color: #0052cc;
+      font-style: italic;
+    }
+    .btn-card[data-theme="AIH"] .btn-text span:last-child {
+      color: #000000;
+    }
+    .btn-card[data-theme="AIH"] .indicator-bar {
+      background-color: #0B751C;
+    }
 
     /* Estado Ativo (Página Selecionada) */
     .btn-card.active {
@@ -181,7 +196,7 @@
     <!-- Botão 3 -->
     <div class="btn-card" data-theme="pertences" onclick="carregarPagina(this, 'https://script.google.com/macros/s/AKfycbyQvf0OcmCPY5fAKDGfrBqA7dMjBwt_IoTMq54DDtaPmXmrJ_rKalrxD_CV_lwo79cBWg/exec')">
       <div class="icon-box">
-        <i class="fa-solid fa-user-nurse"></i>
+        <i class="<i class="fa-solid fa-file-medical"></i>"></i>
       </div>
       <div class="btn-text">
         <span>PERTENCES</span>
@@ -191,13 +206,13 @@
     </div>
 
      <!-- Botão 4 -->
-    <div class="btn-card active" data-theme="plantao" onclick="carregarPagina(this, 'https://script.google.com/a/macros/stacasa.com.br/s/AKfycbzcU9N0XEBKyz26e323_5YCFCoJFdTKiBetvS87fw0ZdwuF_isemReFhGzdDu541BGQ/exec')">
+    <div class="btn-card" data-theme="AIH" onclick="carregarPagina(this, 'https://script.google.com/a/macros/stacasa.com.br/s/AKfycbzcU9N0XEBKyz26e323_5YCFCoJFdTKiBetvS87fw0ZdwuF_isemReFhGzdDu541BGQ/exec')">
       <div class="icon-box">
         <i class="fa-solid fa-clipboard-list"></i>
       </div>
       <div class="btn-text">
-        <span>PROTOCOLO DE</span>
-        <span>AIH</span>
+        <span>PROTOCOLO</span>
+        <span>DE AIH</span>
       </div>
       <div class="indicator-bar"></div>
     </div>
